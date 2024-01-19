@@ -138,6 +138,19 @@ namespace NaturalSelection.UserManagement.AccountRecovery.Tests
             // Assert
             Assert.IsFalse(result);
         }
+
+        [Test]
+        public void IsUserIDValid_EmptySpacesUserId_ReturnsFalse()
+        {
+            // Arrange
+            var invalidUserId = "          ";
+
+            // Act
+            var result = _recoverAccount.IsUserIDValid(invalidUserId);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
     }
 
 
