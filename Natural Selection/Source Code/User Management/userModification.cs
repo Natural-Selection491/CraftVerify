@@ -1,4 +1,3 @@
-// Interface defining the contract for profile modification operations.
 public interface IProfileModification
 {
     bool UpdateUserProfile(string userId, string newBio, byte[] newProfilePhoto);
@@ -131,7 +130,6 @@ public class UserModification : IProfileModification
     // Implementation of logging profile update activities.
     public void LogProfileUpdateActivity(string userId, string updateDetails)
     {
-        // Add logic to log the update activity
         // Assuming a Logger class with a method Log(string) is available
         Logger.Log($"UserID: {userId}, UpdateDetails: {updateDetails}");
     }

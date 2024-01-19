@@ -12,7 +12,7 @@ public class UserModificationTests
         // Arrange
         var userMod = new UserModification();
         string validBio = "This is a valid bio.";
-        byte[] validPhoto = new byte[] { 0xFF, 0xD8 }; // Mock JPEG header
+        byte[] validPhoto = new byte[] { 0xFF, 0xD8 }; // JPEG header
 
         // Act
         bool result = userMod.UpdateUserProfile("testUserId", validBio, validPhoto);
@@ -27,8 +27,8 @@ public class UserModificationTests
     {
         // Arrange
         var userMod = new UserModification();
-        string invalidBio = new string('x', 1001); // Mock invalid bio
-        byte[] validPhoto = new byte[] { 0xFF, 0xD8 }; // Mock JPEG header
+        string invalidBio = new string('x', 1001); // invalid bio
+        byte[] validPhoto = new byte[] { 0xFF, 0xD8 }; // JPEG header
 
         // Act
         bool result = userMod.UpdateUserProfile("testUserId", invalidBio, validPhoto);
@@ -44,7 +44,7 @@ public class UserModificationTests
         // Arrange
         var userMod = new UserModification();
         string validBio = "This is a valid bio.";
-        byte[] validPNGPhoto = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A }; // Mock PNG header
+        byte[] validPNGPhoto = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A }; // PNG header
 
         // Act
         bool result = userMod.UpdateUserProfile("testUserId", validBio, validPNGPhoto);
@@ -77,7 +77,7 @@ public class UserModificationTests
         // Arrange
         var userMod = new UserModification();
         string validBio = "This is a valid bio.";
-        byte[] validHEIFPhoto = new byte[] { 0x00, 0x00, 0x00, 0x18, 0x66, 0x74, 0x79, 0x70, 0x68, 0x65, 0x69, 0x63 }; // Mock HEIF ftyp box header
+        byte[] validHEIFPhoto = new byte[] { 0x00, 0x00, 0x00, 0x18, 0x66, 0x74, 0x79, 0x70, 0x68, 0x65, 0x69, 0x63 }; // HEIF ftyp box header
 
         // Act
         bool result = userMod.UpdateUserProfile("testUserId", validBio, validHEIFPhoto);
@@ -109,7 +109,7 @@ public class UserModificationTests
         // Arrange
         var userMod = new UserModification();
         string validBio = "This is a valid bio.";
-        byte[] invalidPhoto = new byte[] { 0x00 }; // Mock invalid photo
+        byte[] invalidPhoto = new byte[] { 0x00 }; // invalid photo
 
         // Act
         bool result = userMod.UpdateUserProfile("testUserId", validBio, invalidPhoto);
@@ -139,7 +139,7 @@ public class UserModificationTests
     {
         // Arrange
         var userMod = new UserModification();
-        string invalidBio = new string('x', 1001); // Mock invalid bio
+        string invalidBio = new string('x', 1001); // invalid bio
 
         // Act
         bool result = userMod.ValidateBio(invalidBio);
@@ -154,7 +154,7 @@ public class UserModificationTests
     {
         // Arrange
         var userMod = new UserModification();
-        byte[] validJPEGPhoto = { 0xFF, 0xD8 }; // Mock JPEG header
+        byte[] validJPEGPhoto = { 0xFF, 0xD8 }; //  JPEG header
 
         // Act
         bool result = userMod.ValidateProfilePhoto(validJPEGPhoto);
@@ -169,7 +169,7 @@ public class UserModificationTests
     {
         // Arrange
         var userMod = new UserModification();
-        byte[] oversizedPhoto = new byte[5 * 1024 * 1024 + 1]; // Mock photo exceeding size limit
+        byte[] oversizedPhoto = new byte[5 * 1024 * 1024 + 1]; //  photo exceeding size limit
 
         // Act
         bool result = userMod.ValidateProfilePhoto(oversizedPhoto);
