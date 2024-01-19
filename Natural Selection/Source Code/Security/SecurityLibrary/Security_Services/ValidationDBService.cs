@@ -1,6 +1,7 @@
 ﻿// DAO for ValidationService
 
-using MySql.Data.MySqlClient;
+using System.Data;
+using System.Data.SqlClient;
 
 public class ValidationDBService : IValidationDBService
 {
@@ -14,8 +15,8 @@ public class ValidationDBService : IValidationDBService
     public async Task<string> GetUserSaltAsync(string userIdentity)
     {
         // Retrieve the user-specific salt from the database
-        using MySqlConnection connection = new MySqlConnection(_connectionString);
-        var command = new MySqlCommand("SELECT otpSalt FROM UserAccount WHERE email = @Email", connection);
+        using SqlConnection connection = new SqlConnection(_connectionString);
+        var command = new SqlCommand("SELECT otpSalt FROM UserAccount WHERE email = @Email", connection);
         command.Parameters.AddWithValue("@Email", userIdentity);
 
         await connection.OpenAsync();
@@ -34,30 +35,40 @@ public class ValidationDBService : IValidationDBService
 
     public async Task<bool> InsertHashOTPAsync(string otpHash, string userIdentity)
     {
+        SqlConnection connection = null;
+
         try
         {
-            using MySqlConnection connection = new MySqlConnection(_connectionString);
-            MySqlCommand command = new MySqlCommand("UPDATE UserAccount SET hashedOTP = @HashedOTP WHERE email = @Email", connection);
+            connection = new SqlConnection(_connectionString);
+            SqlCommand command = new SqlCommand("UPDATE UserAccount SET hashedOTP = @HashedOTP WHERE email = @Email", connection);
             command.Parameters.AddWithValue("@HashedOTP", otpHash);
             command.Parameters.AddWithValue("@Email", userIdentity);
 
             await connection.OpenAsync();
             int rowsAffected = await command.ExecuteNonQueryAsync();
-            await connection.CloseAsync();
 
             if (rowsAffected == 0)
             {
-                // TODO: Log warning for no user account being updated
+                // Log warning for no user account being updated
+                // Return false to indicate that the update was not successful.
                 return false;
             }
 
-            // TODO: Log successful OTP hash insertion into the database
+            // Log successful OTP hash insertion into the database
             return true;
         }
-        catch (MySqlException ex)
+        catch (SqlException)
         {
-            // TODO: Log SQL exception
-            return false;
+            // Rethrow the SqlException to maintain the original stack trace.
+            throw;
+        }
+        finally
+        {
+            if (connection != null && connection.State == ConnectionState.Open)
+            {
+                await connection.CloseAsync();
+            }
         }
     }
+
 }

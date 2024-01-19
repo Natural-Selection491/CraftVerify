@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Data.SqlClient;
+using System.Security.Cryptography;
 using System.Text;
 namespace Security_Services;
 public class ValidationService : IHashService, IOTPService
@@ -33,20 +34,28 @@ public class ValidationService : IHashService, IOTPService
 
     public async Task<string> CreateOTPAsync(string userIdentity)
     {
-        await EnsureSaltIsFetchedAsync(userIdentity);
-
-        var otp = GenerateRandomCode();
-        var otpHash = await HashValueAsync(otp, userIdentity).ConfigureAwait(false); // Pass both parameters
-
-        var isInserted = await _databaseService.InsertHashOTPAsync(otpHash, userIdentity).ConfigureAwait(false);
-        if (!isInserted)
+        try
         {
-            throw new InvalidOperationException("Failed to insert OTP hash.");
-        }
-        // TODO: Implement OTP transmission logic to send OTP to the user via a secure channel (email, SMS, etc.)
-        // TODO: Implement logging for OTP creation and storage
+            await EnsureSaltIsFetchedAsync(userIdentity);
 
-        return otp;
+            var otp = GenerateRandomCode();
+            var otpHash = await HashValueAsync(otp, userIdentity).ConfigureAwait(false);
+
+            var isInserted = await _databaseService.InsertHashOTPAsync(otpHash, userIdentity).ConfigureAwait(false);
+            if (!isInserted)
+            {
+                throw new InvalidOperationException("Failed to insert OTP hash.");
+            }
+
+            // TODO: Implement OTP transmission logic to send OTP to the user via a secure channel (email, SMS, etc.)
+            // TODO: Implement logging for OTP creation and storage
+
+            return otp;
+        }
+        catch (SqlException ex)
+        {
+            throw new InvalidOperationException("Database operation failed during OTP creation.", ex);
+        }
     }
 
     private string GenerateRandomCode()
@@ -70,6 +79,13 @@ public class ValidationService : IHashService, IOTPService
 
     public async Task<string> HashValueAsync(string value, string userIdentity)
     {
+        // Check for null value first and throw ArgumentNullException if necessary.
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value), "The value to hash cannot be null.");
+        }
+
+        // Fetch salt if needed.
         await EnsureSaltIsFetchedAsync(userIdentity);
 
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(_userSalt));

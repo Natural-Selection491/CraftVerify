@@ -10,7 +10,7 @@ namespace Security_App
             Console.WriteLine("Security App Test Driver");
 
             // The connection string should be provided; this is just a placeholder.
-            string connectionString = "your_connection_string_here";
+            string connectionString = "Server=DESKTOP-M0GIFNC\\SQLEXPRESS;Database=TestDB;User Id=admin;Password=1234;TrustServerCertificate=true;";
 
             // Create an instance of your database service implementation.
             var dbService = new ValidationDBService(connectionString);
