@@ -8,15 +8,13 @@ public class RoleAuthorizationService
 {
     public bool HasError { get; private set; }
     public bool CanRetry { get; private set; }
-    public ClaimsPrincipal Principal { get; private set; }
+    public ClaimsPrincipal Principal? { get; private set; }
     public string FetchedHashPrincipal { get; private set; }
 
-    private readonly ILogger<RoleAuthorizationService> _logger;
     private readonly ValidationService _validationService;
 
-    public RoleAuthorizationService(ILogger<RoleAuthorizationService> logger, ValidationService validationService)
+    public RoleAuthorizationService(ValidationService validationService)
     {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _validationService = validationService ?? throw new ArgumentNullException(nameof(validationService));
     }
 
