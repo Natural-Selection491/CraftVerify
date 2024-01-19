@@ -1,14 +1,14 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AccountRecoveryService
+namespace NaturalSelection.UserManagement.AccountRecovery
 {
-    internal interface IRecoverAccount
+    public interface IRecoverAccount
     {
-        public bool RecoverUserAccount(string userHash, string newStatus);
+        public bool RecoverUserAccount();
 
         public bool LogRecoveryRequest(string userHash);
     }
