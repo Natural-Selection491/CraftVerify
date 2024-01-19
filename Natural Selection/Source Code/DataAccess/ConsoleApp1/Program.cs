@@ -2,16 +2,13 @@
 
 static void Main()
 {
-    string SqlServerconnString = "Server=localhost;Database=CraftVerify;User Id=admin;Password=admin;TrustServerCertificate=true";
-    //string MySqlServerconnString = "@Server=myServerAddress;Database=myDataBase;User=myUsername;Password=myPassword;\r\n";
-
     string INSERTsqlcommand = "INSERT INTO ClaimPrinciple (claim, stuff, hashPrinciple) VALUES ('admin', 'admin', 'aikjwnrvikhjqb3nrb');";
     string GETsqlcommand = "SELECT * FROM ClaimPrinciple WHERE claim = 'admin';";
     SQLServerDAO sqlDAO = new SQLServerDAO();
 
-    sqlDAO.InsertAttribute(SqlServerconnString, INSERTsqlcommand);
+    sqlDAO.InsertAttribute(INSERTsqlcommand);
 
-    Console.WriteLine(sqlDAO.GetAttribute(SqlServerconnString, GETsqlcommand));
+    Console.WriteLine(sqlDAO.GetAttribute(GETsqlcommand));
 }
 
 Main();
