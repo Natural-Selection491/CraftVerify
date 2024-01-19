@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kfc8I/jJztQix+YaZ+xDoPlRy5c5EafBWzMJSaGP1unVeHY3e/KqwN4LeGWJZdure5nbGPaw30Ghyn59erFKRA==",
+  "dgSpecHash": "5RA0VpNcp6U0Zk2UHnQlstqckvEWwMYzgPXGyYFJewhiyJMsTHua5PXvQHtxCnrKoT0I78Cj4kUM4ZV707a4GA==",
   "success": true,
   "projectFilePath": "C:\\Users\\kamer\\Documents\\GitHub\\CraftVerify\\Natural Selection\\Source Code\\DataAccess\\DataAccessLibraryCraftVerify.csproj",
   "expectedPackageFiles": [
@@ -152,7 +152,7 @@
       "message": "Package 'Microsoft.Data.SqlClient' 5.1.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-98g6-xh36-x2p7",
       "libraryId": "Microsoft.Data.SqlClient",
       "targetGraphs": [
-        "net6.0"
+        "net8.0"
       ]
     }
   ]
