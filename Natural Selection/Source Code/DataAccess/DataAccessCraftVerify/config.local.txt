@@ -1,0 +1,1 @@
+﻿ConnectionString:=Server=localhost;Database=CraftVerify;User Id=admin;Password=admin;TrustServerCertificate=true;
