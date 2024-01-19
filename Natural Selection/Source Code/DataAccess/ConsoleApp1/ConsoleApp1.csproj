@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccess\DataAccessLibraryCraftVerify.csproj" />
+    <ProjectReference Include="..\DataAccessCraftVerify\DataAccessLibraryCraftVerify.csproj" />
   </ItemGroup>
 
 </Project>
